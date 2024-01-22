@@ -62,9 +62,24 @@ function loadStorage(data, objName){
   if (data[objName].title){
     localStorage.setItem('title',data[objName].title)
   }
-  localStorage.setItem('subtitle', data[objName].subtitle)
-  localStorage.setItem('url', data[objName].url)
-  localStorage.setItem('img', data[objName].cover.large)
-  localStorage.setItem('author', data[objName].authors[0].name)
-  localStorage.setItem('pages', data[objName].pagination)
+
+  if (data[objName].subtitle){
+    localStorage.setItem('subtitle', data[objName].subtitle)
+  }
+
+  if (data[objName].url){
+    localStorage.setItem('url', data[objName].url)
+  }
+  
+  if (data[objName].cover.large){
+    localStorage.setItem('img', data[objName].cover.large)
+  }
+  
+  if (data[objName].authors[0].name){
+    localStorage.setItem('author', data[objName].authors[0].name)
+  }
+  
+  if (data[objName].pagination){
+    localStorage.setItem('pages', data[objName].pagination)
+  }
 }
