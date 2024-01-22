@@ -30,6 +30,15 @@ function getBook(){
 }
 
 function loadDOM(){
+  //reset to default values
+  document.querySelector('h3').innerText = ''
+  document.querySelector('h2').innerText = ''
+  document.querySelector('img').src = ''
+  document.querySelector('a').href = '#'
+  document.querySelector('span').innerText = ''
+  document.querySelector('h4').innerText = ''
+
+
   //put localStorage into DOM if it exists
   if(localStorage.getItem('subtitle')) {
     document.querySelector('h3').innerText = localStorage.getItem('subtitle')
@@ -79,7 +88,7 @@ function setStorage(data, objName){
     localStorage.setItem('author', data[objName].authors[0].name)
   }
   
-  if (data[objName].pagination){
-    localStorage.setItem('pages', data[objName].pagination)
+  if (data[objName].number_of_pages){
+    localStorage.setItem('pages', `Pages: ${data[objName].number_of_pages}`)
   }
 }
