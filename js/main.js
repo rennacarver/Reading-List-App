@@ -1,34 +1,4 @@
-
-loadDOM()
-document.querySelector('button').addEventListener('click', getBook)
-
-function getBook(){
-  const ISBN = document.querySelector('input').value
-  //console.log(ISBN)
-  const url = `https://openlibrary.org/api/books?bibkeys=ISBN:${ISBN}&jscmd=data&format=json`
-
-  fetch(url)
-      .then(res => res.json()) // parse response as JSON
-      .then(data => {
-        
-        //console.log(objName)
-        console.log(data)
-
-        //object name formatting
-        let objName = `ISBN:${ISBN}`
-        
-        //if data returned is not empty, load localstorage and DOM
-        if(data[objName]){
-        setStorage(data, objName)
-        loadDOM()
-        }
-        
-      })
-      .catch(err => {
-          console.log(`error ${err}`)
-      });
-}
-
+//function declarations
 function loadDOM(){
   //reset to default values
   document.querySelector('h3').innerText = ''
@@ -65,9 +35,14 @@ function loadDOM(){
   }
 }
 
-function setStorage(data, objName){
-  //put into localStorage
+function setStorage(data, objName, ISBN){
+  
+  //clear localStorage
   localStorage.clear()
+
+  //put into localStorage
+  localStorage.setItem('ISBN', ISBN)
+
   if (data[objName].title){
     localStorage.setItem('title',data[objName].title)
   }
@@ -82,6 +57,8 @@ function setStorage(data, objName){
   
   if (data[objName].cover?.large){
     localStorage.setItem('img', data[objName].cover.large)
+  } else {
+    localStorage.setItem('img', 'img/nopreview.png')
   }
   
   if (data[objName].authors[0]?.name){
@@ -92,3 +69,47 @@ function setStorage(data, objName){
     localStorage.setItem('pages', `Pages: ${data[objName].number_of_pages}`)
   }
 }
+
+function getBook(){
+  const ISBN = document.querySelector('input').value
+  //console.log(ISBN)
+  const url = `https://openlibrary.org/api/books?bibkeys=ISBN:${ISBN}&jscmd=data&format=json`
+
+  fetch(url)
+      .then(res => res.json()) // parse response as JSON
+      .then(data => {
+        
+        //console.log(objName)
+        console.log(data)
+
+        //object name formatting
+        let objName = `ISBN:${ISBN}`
+        
+        //if data returned is not empty, load localstorage and DOM
+        if(data[objName]){
+        setStorage(data, objName, ISBN)
+        loadDOM()
+        }
+        
+      })
+      .catch(err => {
+          console.log(`error ${err}`)
+      });
+}
+
+function saveBook(){
+  let table = document.querySelector('table')
+  let row = table.insertRow(2)
+  let cell1 = row.insertCell(0)
+  let cell2 = row.insertCell(1)
+  cell1.innerHTML = localStorage.getItem('title')
+  cell2.innerHTML = localStorage.getItem('ISBN')
+}
+
+//webpage load
+loadDOM()
+document.getElementById('getBook').addEventListener('click', getBook)
+document.getElementById('saveBook').addEventListener('click', saveBook)
+
+
+

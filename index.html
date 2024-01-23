@@ -5,7 +5,7 @@
     	<meta name="description" content="This is where your description goes">
     	<meta name="keywords" content="one, two, three">
 
-		<title>Book Finder</title>
+		<title>Reading List App</title>
 
 		<!-- external CSS link -->
 		<link rel="stylesheet" href="css/normalize.css">
@@ -13,9 +13,18 @@
 	</head>
 	<body>
 
-		<h1>Open Library Book List</h1>
-		<input type="text" name="" value="">
-		<button type="button" name="button">Get Book</button>
+		<h1>Reading List</h1>
+		<div>
+			<input type="text" name="" value="">
+		</div>
+		<div>
+			<button id="getBook" type="button" name="button">Get Book</button>
+		</div>
+		<div>
+			<button id ="saveBook" type="button" name="button">Save to List</button>
+		</div>
+		<hr>
+		
 
 		<h2>Book Title</h2>
 		<h3>Subtitle</h3>
@@ -23,6 +32,16 @@
 		<h4>Pages</h4>
 		<a href="#">View on Open Library</a>
 		<img src="" alt="">
+
+		<table>
+			<tr>
+				<th colspan="2">Book List</th>
+			</tr>
+			<tr>
+			  <th>Title</th>
+			  <th>ISBN</th>
+			</tr>
+		</table> 
 
 		<script type="text/javascript" src="js/main.js"></script>
 	</body>

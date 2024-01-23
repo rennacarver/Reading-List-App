@@ -10,9 +10,50 @@
 /******************************************
 /* LAYOUT
 /*******************************************/
+body {
+  background-color: #ccbc91;
+}
+
+h1, h2, h3, h4, h5, span, div, a {
+  display: block;
+  margin: 10px auto;
+  text-align: center;
+}
+
+hr{
+  width: 25%;
+  margin: 20px auto;
+}
+
+input, button {
+  text-align: center;
+}
+
 img{
   display: block;
   margin: 0 auto;
+  width: 200px;
+  height: auto;
+  border: 2px solid #7d7d7d;
+  border-radius: 5px;
+}
+
+table {
+  border-collapse: collapse;
+  border: 1px solid #e2e2e2;
+  letter-spacing: 1px;
+  font-size: 0.8rem;
+  margin: 20px auto;
+}
+
+td, th {
+  border: 1px solid #e2e2e2;
+  padding: 10px 20px;
+}
+
+th {
+  background-color: #f9f9f9;
+  color: #2d5091;
 }
 
 
