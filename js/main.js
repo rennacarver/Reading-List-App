@@ -7,6 +7,11 @@ function loadDOM(){
   //put localStorage into DOM if it exists
   if(localStorage.getItem('bookList')){
     document.querySelector('table').innerHTML = localStorage.getItem('bookList')
+    let table = document.querySelector('table')
+    //if books in list, activate listeners on book actions
+    if(table.getElementsByTagName('tr')[2]){
+      activateTable()
+    }
   }
 
   if(localStorage.getItem('subtitle')) {
@@ -140,12 +145,27 @@ function unshiftTable(){
   let cell0 = row.insertCell(0)
   let cell1 = row.insertCell(1)
   let cell2 = row.insertCell(2)
+  let cell3 = row.insertCell(3)
   cell0.innerHTML = `<img src="${localStorage.getItem('img')}">`
   cell1.innerHTML = localStorage.getItem('title')
-  cell2.ISBN = localStorage.getItem('ISBN')
-  cell2.innerHTML = `<a href="#">${cell2.ISBN}</a>`
+
   //on click, loads book back to stage
-  cell2.onclick = getBook; setInput;
+  cell2.ISBN = localStorage.getItem('ISBN')
+  cell2.innerHTML = `<p id="tableISBN" style="text-decoration: underline;">${cell2.ISBN}</p>`
+  //cell2.onclick = getBook;
+  
+  //on click, deletes row from table
+  cell3.innerHTML = `<p id="tableX" style="text-decoration: underline;">X</p>`
+  cell3.rowIndex = cell3.parentNode.rowIndex
+  //cell3.onclick = removeBook
+
+  activateTable()
+}
+
+function removeBook(event){
+  console.log('removeBook called')
+  document.querySelector("table").deleteRow(event.currentTarget.rowIndex);
+  saveTableToLocal()
 }
 
 function saveTableToLocal(){
@@ -154,27 +174,25 @@ function saveTableToLocal(){
   localStorage.setItem('bookList', document.querySelector('table').innerHTML)
 }
 
-function setInput(event){
-  console.log('setInput called')
-  document.querySelector('input').value = event.currentTarget.ISBN
-}
-
 function clearList(){
   console.log('clearList called')
-  document.querySelector('table').innerHTML = `<table>
-  <tr>
-    <th colspan="3">Book List</th>
-  </tr>
-  <tr>
-    <th></th>
-    <th>Title</th>
-    <th>ISBN</th>
-  </tr>
-  <tr>
-    <td colspan="3"><div><button id="clearList">Clear List</button></div></td>
-  </tr>
-</table> `
+  document.querySelector('table').innerHTML = `<tr>
+  <th colspan="4">Book List</th>
+</tr>
+<tr>
+  <th></th>
+  <th>Title</th>
+  <th>ISBN</th>
+  <th></th>
+</tr>`
   saveTableToLocal()
+}
+
+function activateTable(){
+  console.log('activateTable called')
+  //after loading table into DOM, add event listeners to ISBN and remove buttons
+  document.getElementById('tableISBN').addEventListener('click', getBook)
+  document.getElementById('tableX').addEventListener('click', removeBook)
 }
 
 //webpage load
