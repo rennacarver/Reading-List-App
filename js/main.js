@@ -9,7 +9,7 @@ function loadDOM(){
     document.querySelector('table').innerHTML = localStorage.getItem('bookList')
     let table = document.querySelector('table')
     //if books in list, activate listeners on book actions
-    if(table.getElementsByTagName('tr')[2]){
+    if(table.getElementsByTagName('tr')[2] && table.getElementsByTagName('tr')[2]){
       activateTable()
     }
   }
@@ -78,15 +78,17 @@ function getBook(event){
   console.log('getBook called')
   //if no ISBN provided, pull value from input
   let ISBN = ''
-  if(event.currentTarget.ISBN){
+  //if function is called from book list, there will be a parentNode
+  //if function is called from input, there will not be a parentNode
+  if(event.target.parentElement.ISBN){
     console.log(`ISBN provided to function`)
-    ISBN = event.currentTarget.ISBN
+    ISBN = event.target.innerText
   } else {
     ISBN = document.querySelector('input').value
     console.log(`no ISBN passed as parameter`)
   }
 
-  console.log(ISBN)
+  //console.log(ISBN)
   
   const url = `https://openlibrary.org/api/books?bibkeys=ISBN:${ISBN}&jscmd=data&format=json`
 
@@ -164,7 +166,8 @@ function unshiftTable(){
 
 function removeBook(event){
   console.log('removeBook called')
-  document.querySelector("table").deleteRow(event.currentTarget.rowIndex);
+  //console.log(event.currentTarget.parentNode.parentNode)
+  document.querySelector("table").deleteRow(event.currentTarget.parentNode.parentNode.rowIndex);
   saveTableToLocal()
 }
 
