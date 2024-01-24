@@ -1,13 +1,8 @@
 //function declarations
 function loadDOM(){
+  console.log('loadDOM called')
   //reset to default values
-  document.querySelector('h3').innerText = ''
-  document.querySelector('h2').innerText = ''
-  document.querySelector('img').src = ''
-  document.querySelector('a').href = '#'
-  document.querySelector('span').innerText = ''
-  document.querySelector('h4').innerText = ''
-
+  clearDOM()
 
   //put localStorage into DOM if it exists
   if(localStorage.getItem('subtitle')) {
@@ -36,7 +31,7 @@ function loadDOM(){
 }
 
 function setStorage(data, objName, ISBN){
-  
+  console.log('setStorage called')
   //clear localStorage
   localStorage.clear()
 
@@ -70,9 +65,19 @@ function setStorage(data, objName, ISBN){
   }
 }
 
-function getBook(){
-  const ISBN = document.querySelector('input').value
-  //console.log(ISBN)
+function getBook(event){
+  console.log('getBook called')
+  //if no ISBN provided, pull value from input
+  let ISBN = ''
+  if(event.currentTarget.ISBN){
+    console.log(`ISBN provided to function`)
+    ISBN = event?.currentTarget?.ISBN
+    console.log(ISBN)
+  } else {
+    ISBN = document.querySelector('input').value
+    console.log(`no ISBN passed as parameter`)
+  }
+  
   const url = `https://openlibrary.org/api/books?bibkeys=ISBN:${ISBN}&jscmd=data&format=json`
 
   fetch(url)
@@ -80,15 +85,20 @@ function getBook(){
       .then(data => {
         
         //console.log(objName)
-        console.log(data)
+        //console.log(data)
 
         //object name formatting
         let objName = `ISBN:${ISBN}`
         
         //if data returned is not empty, load localstorage and DOM
+        //if no data returned, give error and clear stage
         if(data[objName]){
         setStorage(data, objName, ISBN)
         loadDOM()
+        } else {
+          clearStorage()
+          clearDOM()
+          alert('No match found.')
         }
         
       })
@@ -97,19 +107,39 @@ function getBook(){
       });
 }
 
+function clearStorage(){
+  console.log('clearStorage called')
+  localStorage.clear()
+}
+
+function clearDOM(){
+  console.log('clearDOM called')
+  document.querySelector('h3').innerText = ''
+  document.querySelector('h2').innerText = ''
+  document.querySelector('img').src = 'img/nopreview.png'
+  document.querySelector('a').href = '#'
+  document.querySelector('span').innerText = ''
+  document.querySelector('h4').innerText = ''
+}
+
 function saveBook(){
+  console.log('saveBook called')
   let table = document.querySelector('table')
   let row = table.insertRow(2)
   let cell1 = row.insertCell(0)
   let cell2 = row.insertCell(1)
   cell1.innerHTML = localStorage.getItem('title')
-  cell2.innerHTML = localStorage.getItem('ISBN')
+  cell2.innerHTML = `<a href="">${localStorage.getItem('ISBN')}</a>`
+  cell2.ISBN = localStorage.getItem('ISBN')
+  cell2.onclick = getBook
+
+  //set ISBN as hyperlink to reload book from list onto stage
+
 }
 
 //webpage load
 loadDOM()
 document.getElementById('getBook').addEventListener('click', getBook)
 document.getElementById('saveBook').addEventListener('click', saveBook)
-
 
 

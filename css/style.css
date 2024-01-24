@@ -11,13 +11,20 @@
 /* LAYOUT
 /*******************************************/
 body {
-  background-color: #ccbc91;
+  background: linear-gradient(45deg, #d5d4c9, #dbd7cf);
 }
 
 h1, h2, h3, h4, h5, span, div, a {
   display: block;
   margin: 10px auto;
   text-align: center;
+}
+
+h5{
+  font-style: italic; 
+  margin-top: -10px; 
+  font-size: 0.7em;
+  font-weight: 400;
 }
 
 hr{
@@ -49,6 +56,7 @@ table {
 td, th {
   border: 1px solid #e2e2e2;
   padding: 10px 20px;
+  background-color: #f9f9f9
 }
 
 th {
