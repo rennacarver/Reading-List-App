@@ -16,27 +16,23 @@
 		<h1>Reading List</h1>
 		<h5>powered by Open Library</h5>
 		<div>
-			<input type="text" name="" value="">
+			<input type="text" name="" placeholder="978-1684158058">
 		</div>
-		<div>
-			<button id="getBook" type="button" name="button">Search</button>
-		</div>
+		<div><button id="getBook" type="button" name="button">Search ISBN</button></div>
 		
-		<hr>
-		
-
-		<h2>Book Title</h2>
-		<h3>Subtitle</h3>
-		<span>By</span>
-		<h4>Pages</h4>
-		<a href="#" target="_blank">View on Open Library</a>
-		<img src="" alt="">
-
-		<div>
-			<button id ="saveBook" type="button" name="button">Save to List</button>
+		<!--Book Stage-->
+		<div class="bookStage">
+			<h2>Book Title</h2>
+			<h3>Subtitle</h3>
+			<span>By</span>
+			<h4>Pages</h4>
+			<img src="" alt="">
+			<a href="#" target="_blank">View on Open Library</a>
+			
+			<div><button id ="saveBook" type="button" name="button">Save to List</button></div>
 		</div>
 
-		<table>
+		<table id="bookTable">
 			<tr>
 				<th colspan="4">Book List</th>
 			</tr>
@@ -48,6 +44,7 @@
 			</tr>
 		</table> 
 		<div><button id="clearList">Clear List</button></div>
+		<div><button onclick="download_table_as_csv('bookTable');">Download as CSV</button></div>
 
 		<script type="text/javascript" src="js/main.js"></script>
 	</body>

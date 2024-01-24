@@ -11,13 +11,65 @@
 /* LAYOUT
 /*******************************************/
 body {
-  background: linear-gradient(45deg, #d5d4c9, #dbd7cf);
+  background: linear-gradient(45deg, #ececec, #f2f2f2);
 }
 
 h1, h2, h3, h4, h5, span, div, a {
   display: block;
   margin: 10px auto;
   text-align: center;
+}
+
+button {
+  background-color: #222;
+  border-radius: 4px;
+  border-style: none;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: "Farfetch Basis","Helvetica Neue",Arial,sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.5;
+  margin: 0;
+  max-width: none;
+  min-height: 44px;
+  min-width: 10px;
+  outline: none;
+  overflow: hidden;
+  padding: 9px 20px 8px;
+  position: relative;
+  text-align: center;
+  text-transform: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: fit-content;
+}
+
+button:hover,
+button:focus {
+  opacity: .75;
+}
+
+
+
+h2{
+  margin: 10px 20px;
+}
+
+.bookStage{
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 30px 50px;
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: linear-gradient(45deg, #ececec, #e6e6e6);
+  border: solid #e2e2e2 2px;
+  border-radius: 5px;
 }
 
 h5{
@@ -67,6 +119,10 @@ td, th {
 th {
   background-color: #f9f9f9;
   color: #2d5091;
+}
+
+span {
+  margin-top: -15px;
 }
 
 
