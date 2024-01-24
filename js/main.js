@@ -5,6 +5,10 @@ function loadDOM(){
   clearDOM()
 
   //put localStorage into DOM if it exists
+  if(localStorage.getItem('bookList')){
+    document.querySelector('table').innerHTML = localStorage.getItem('bookList')
+  }
+
   if(localStorage.getItem('subtitle')) {
     document.querySelector('h3').innerText = localStorage.getItem('subtitle')
   }
@@ -71,23 +75,21 @@ function getBook(event){
   let ISBN = ''
   if(event.currentTarget.ISBN){
     console.log(`ISBN provided to function`)
-    ISBN = event?.currentTarget?.ISBN
-    console.log(ISBN)
+    ISBN = event.currentTarget.ISBN
   } else {
     ISBN = document.querySelector('input').value
     console.log(`no ISBN passed as parameter`)
   }
+
+  console.log(ISBN)
   
   const url = `https://openlibrary.org/api/books?bibkeys=ISBN:${ISBN}&jscmd=data&format=json`
 
   fetch(url)
       .then(res => res.json()) // parse response as JSON
       .then(data => {
-        
-        //console.log(objName)
-        //console.log(data)
 
-        //object name formatting
+        //formatting to access object properties
         let objName = `ISBN:${ISBN}`
         
         //if data returned is not empty, load localstorage and DOM
@@ -114,6 +116,7 @@ function clearStorage(){
 
 function clearDOM(){
   console.log('clearDOM called')
+  //document.querySelector('table').innerHTML = ''
   document.querySelector('h3').innerText = ''
   document.querySelector('h2').innerText = ''
   document.querySelector('img').src = 'img/nopreview.png'
@@ -124,22 +127,60 @@ function clearDOM(){
 
 function saveBook(){
   console.log('saveBook called')
+  //load current book into HTML table
+  unshiftTable()
+
+  saveTableToLocal()
+}
+
+function unshiftTable(){
+  console.log('loadTable called')
   let table = document.querySelector('table')
   let row = table.insertRow(2)
-  let cell1 = row.insertCell(0)
-  let cell2 = row.insertCell(1)
+  let cell0 = row.insertCell(0)
+  let cell1 = row.insertCell(1)
+  let cell2 = row.insertCell(2)
+  cell0.innerHTML = `<img src="${localStorage.getItem('img')}">`
   cell1.innerHTML = localStorage.getItem('title')
-  cell2.innerHTML = `<a href="">${localStorage.getItem('ISBN')}</a>`
   cell2.ISBN = localStorage.getItem('ISBN')
-  cell2.onclick = getBook
+  cell2.innerHTML = `<a href="#">${cell2.ISBN}</a>`
+  //on click, loads book back to stage
+  cell2.onclick = getBook; setInput;
+}
 
-  //set ISBN as hyperlink to reload book from list onto stage
+function saveTableToLocal(){
+  console.log('saveTableToLocal called')
+  //save table to localStorage
+  localStorage.setItem('bookList', document.querySelector('table').innerHTML)
+}
 
+function setInput(event){
+  console.log('setInput called')
+  document.querySelector('input').value = event.currentTarget.ISBN
+}
+
+function clearList(){
+  console.log('clearList called')
+  document.querySelector('table').innerHTML = `<table>
+  <tr>
+    <th colspan="3">Book List</th>
+  </tr>
+  <tr>
+    <th></th>
+    <th>Title</th>
+    <th>ISBN</th>
+  </tr>
+  <tr>
+    <td colspan="3"><div><button id="clearList">Clear List</button></div></td>
+  </tr>
+</table> `
+  saveTableToLocal()
 }
 
 //webpage load
 loadDOM()
 document.getElementById('getBook').addEventListener('click', getBook)
 document.getElementById('saveBook').addEventListener('click', saveBook)
+document.getElementById('clearList').addEventListener('click', clearList)
 
 
