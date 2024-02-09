@@ -1,6 +1,6 @@
 //function declarations
 function loadDOM(){
-  console.log('loadDOM called')
+  //console.log('loadDOM called')
   //reset to default values
   clearDOM()
 
@@ -40,7 +40,7 @@ function loadDOM(){
 }
 
 function setStorage(data, objName, ISBN){
-  console.log('setStorage called')
+  //console.log('setStorage called')
   //clear localStorage
   localStorage.clear()
 
@@ -75,7 +75,7 @@ function setStorage(data, objName, ISBN){
 }
 
 function getBook(event){
-  console.log('getBook called')
+  //console.log('getBook called')
   //if no ISBN provided, pull value from input
   let ISBN = ''
   //if function is called from book list, there will be a parentNode
@@ -117,12 +117,12 @@ function getBook(event){
 }
 
 function clearStorage(){
-  console.log('clearStorage called')
+  //console.log('clearStorage called')
   localStorage.clear()
 }
 
 function clearDOM(){
-  console.log('clearDOM called')
+  //console.log('clearDOM called')
   //document.querySelector('table').innerHTML = ''
   document.querySelector('h3').innerText = ''
   document.querySelector('h2').innerText = ''
@@ -133,7 +133,7 @@ function clearDOM(){
 }
 
 function saveBook(){
-  console.log('saveBook called')
+  //console.log('saveBook called')
   //load current book into HTML table
   unshiftTable()
 
@@ -141,7 +141,7 @@ function saveBook(){
 }
 
 function unshiftTable(){
-  console.log('loadTable called')
+  //console.log('loadTable called')
   let table = document.querySelector('table')
   let row = table.insertRow(2)
   let cell0 = row.insertCell(0)
@@ -165,20 +165,20 @@ function unshiftTable(){
 }
 
 function removeBook(event){
-  console.log('removeBook called')
+  //console.log('removeBook called')
   //console.log(event.currentTarget.parentNode.parentNode)
   document.querySelector("table").deleteRow(event.currentTarget.parentNode.parentNode.rowIndex);
   saveTableToLocal()
 }
 
 function saveTableToLocal(){
-  console.log('saveTableToLocal called')
+  //console.log('saveTableToLocal called')
   //save table to localStorage
   localStorage.setItem('bookList', document.querySelector('table').innerHTML)
 }
 
 function clearList(){
-  console.log('clearList called')
+  //console.log('clearList called')
   document.querySelector('table').innerHTML = `<tr>
   <th colspan="4">Book List</th>
 </tr>
@@ -192,7 +192,7 @@ function clearList(){
 }
 
 function activateTable(){
-  console.log('activateTable called')
+  //console.log('activateTable called')
   //after loading table into DOM, add event listeners to ISBN and remove buttons
   document.getElementById('tableISBN').addEventListener('click', getBook)
   document.getElementById('tableX').addEventListener('click', removeBook)
